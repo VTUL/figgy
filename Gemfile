@@ -64,7 +64,7 @@ gem 'devise'
 gem 'ezid-client'
 gem 'hydra-head'
 gem 'hydra-role-management'
-gem 'iiif_manifest', github: "samvera-labs/iiif_manifest"
+gem 'iiif_manifest', github: "samvera-labs/iiif_manifest", branch: "configurable"
 gem 'modernizr-rails'
 gem 'normalize-rails'
 gem 'omniauth-cas'

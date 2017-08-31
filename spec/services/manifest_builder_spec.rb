@@ -65,6 +65,12 @@ RSpec.describe ManifestBuilder do
       expect(output["structures"].length).to eq 3
       structure_canvas_id = output["structures"][2]["canvases"][0]
       expect(canvas_id).to eq structure_canvas_id
+      first_image = output["sequences"][0]["canvases"][0]["images"][0]
+      expect(first_image["data"]).to eq nil
+      expect(first_image["@type"]).to eq "oa:Annotation"
+      expect(first_image["motivation"]).to eq "sc:painting"
+      expect(first_image["resource"]["data"]).to eq nil
+      expect(first_image["resource"]["service"]["@id"]).not_to be_nil
     end
 
     context "when in staging" do
