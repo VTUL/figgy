@@ -10,7 +10,7 @@ class MigrationAdapter < Valkyrie::Storage::Disk
   # @param resource [Valkyrie::Resource]
   # @return [Valkyrie::StorageAdapter::File]
   def upload(file:, resource: nil)
-    new_path = base_path.join(resource.try(:id).to_s, file.original_filename)
+    new_path = path_generator.generate(resource: resource, file: file)
     FileUtils.mkdir_p(new_path.parent)
     file_mover.call(file.path, new_path)
     find_by(id: Valkyrie::ID.new("disk://#{new_path}"))
