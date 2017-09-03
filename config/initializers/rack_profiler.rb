@@ -1,6 +1,5 @@
 require 'rack-mini-profiler'
 if Rails.env.staging?
-  Rails.application.middleware.delete(Rack::MiniProfiler)
   Rails.application.middleware.insert_after(Rack::Deflater, Rack::MiniProfiler)
 end
 if Rails.env.development?
