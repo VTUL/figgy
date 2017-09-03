@@ -476,6 +476,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
+    newrelic_rpm (4.4.0.336)
     nio4r (2.1.0)
     nokogiri (1.6.6.4)
       mini_portile (~> 0.6.0)
@@ -782,6 +783,7 @@ DEPENDENCIES
   jquery-ui-rails (~> 5.0)
   listen
   modernizr-rails
+  newrelic_rpm
   normalize-rails
   omniauth-cas
   openseadragon
