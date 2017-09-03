@@ -86,3 +86,5 @@ gem 'capistrano-rails'
 gem 'capistrano-rails-console'
 gem 'prawn'
 gem 'newrelic_rpm'
+gem 'rack-mini-profiler', require: false
+gem 'memory_profiler'

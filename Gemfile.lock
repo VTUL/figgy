@@ -461,6 +461,7 @@ GEM
       scrub_rb (>= 1.0.1, < 2)
       unf
     memoist (0.16.0)
+    memory_profiler (0.9.8)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -782,6 +783,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails (~> 5.0)
   listen
+  memory_profiler
   modernizr-rails
   newrelic_rpm
   normalize-rails
