@@ -119,7 +119,7 @@ class ManifestBuilder
       # Retrieve the child members for the subject resource of the Manifest
       # @return [Resource]
       def members
-        @members ||= decorate.members
+        @members ||= decorate.members.to_a
       end
 
       ##
