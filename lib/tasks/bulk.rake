@@ -14,8 +14,7 @@ namespace :bulk do
     abort "usage: rake bulk:ingest DIR=/path/to/files BIB=1234567 COLL=collid LOCAL_ID=local_id REPLACES=replaces" unless dir && Dir.exist?(dir)
 
     if coll.present?
-      query = FindByTitle.new(query_service: Valkyrie.config.metadata_adapter.query_service)
-      collection = query.find_by_title(title: coll)
+      collection = Valkyrie.config.metadata_adapter.query_service.find_by(id: Valkyrie::ID.new(coll))
     end
 
     @logger = Logger.new(STDOUT)
@@ -31,6 +30,8 @@ namespace :bulk do
           collection: collection,
           source_metadata_identifier: bib,
           local_identifier: local_id,
+          state: 'final_review',
+          visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC,
           replaces: replaces
         )
       else
@@ -39,6 +40,8 @@ namespace :bulk do
           collection: collection,
           source_metadata_identifier: bib,
           local_identifier: local_id,
+          state: 'final_review',
+          visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC,
           replaces: replaces
         )
       end
