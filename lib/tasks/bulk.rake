@@ -32,6 +32,7 @@ namespace :bulk do
           local_identifier: local_id,
           state: 'final_review',
           visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC,
+          rights_statement: 'http://cicognara.org/microfiche_copyright',
           replaces: replaces
         )
       else
@@ -42,6 +43,7 @@ namespace :bulk do
           local_identifier: local_id,
           state: 'final_review',
           visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC,
+          rights_statement: 'http://cicognara.org/microfiche_copyright',
           replaces: replaces
         )
       end
