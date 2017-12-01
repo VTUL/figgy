@@ -113,7 +113,7 @@ class PlumImporter
   end
 
   def all_collections
-    @all_collections ||= query_service.find_all_of_model(model: Collection).group_by { |x| x.local_identifier.first }
+    @all_collections ||= query_service.find_all_of_model(model: Collection).group_by { |x| Array.wrap(x.local_identifier).first }
   end
 
   class PlumDerivative
