@@ -66,6 +66,7 @@ class PlumImporter
 
   # A resource changeset
   def change_set
+puts "attributes: #{change_set_attributes.inspect}"
     @change_set ||= ScannedResourceChangeSet.new(resource).tap do |change_set|
       change_set.prepopulate!
       change_set.validate(change_set_attributes)
