@@ -79,6 +79,7 @@ puts "attributes: #{change_set_attributes.inspect}"
   end
 
   def resource
+puts "document: #{document.attributes.inspect}"
     @resource ||= ScannedResource.new(document.attributes)
   end
 
