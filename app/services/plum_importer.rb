@@ -160,7 +160,7 @@ class PlumImporter
 
     def force_encoding(vals)
       vals.map do |s|
-        s.to_s.encode('UTF-8', invalid: :replace, undef: :replace, replace: '?')
+        s.force_encoding('UTF-8', invalid: :replace, undef: :replace, replace: '?')
       end
     end
 
