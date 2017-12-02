@@ -78,7 +78,6 @@ class PlumImporter
   end
 
   def resource
-puts "title: #{document.attributes[:title]} (#{document.attributes[:title].encoding})"
     @resource ||= ScannedResource.new(document.attributes)
   end
 
@@ -152,11 +151,17 @@ puts "title: #{document.attributes[:title]} (#{document.attributes[:title].encod
       {
         depositor: solr_doc["depositor_ssim"],
         source_metadata_identifier: solr_doc.fetch("source_metadata_identifier_ssim", []).first,
-        title: solr_doc["title_tesim"],
+        title: force_encoding(solr_doc["title_tesim"])
         state: solr_doc["workflow_state_name_ssim"],
         identifier: solr_doc.fetch("identifier_tesim", []).first,
         local_identifier: solr_doc.fetch("local_identifier_ssim", []).first
       }
+    end
+
+    def force_encoding(vals)
+      vals.map do |s|
+        s.to_s.encode('UTF-8', invalid: :replace, undef: :replace, replace: '?')
+      end
     end
 
     def id
