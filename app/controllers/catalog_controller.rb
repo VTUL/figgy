@@ -28,6 +28,8 @@ class CatalogController < ApplicationController
 
     config.index.title_field = 'title_ssim'
     config.index.display_type_field = "human_readable_type_ssim"
+    config.add_index_field 'depositor_ssim', label: 'Depositor'
+
     config.add_facet_field 'member_of_collection_titles_ssim', label: 'Collections'
     config.add_facet_field 'human_readable_type_ssim', label: 'Type of Work'
     config.add_facet_field 'ephemera_project_ssim', label: 'Ephemera Project'
