@@ -55,9 +55,9 @@ RSpec.describe ManifestBuilder do
   describe "#build" do
     before do
       output = change_set_persister.save(change_set: change_set)
-      file_set_id = output.member_ids.first
+      @file_set_id = output.member_ids.first
       change_set = ScannedResourceChangeSet.new(output)
-      change_set.validate(logical_structure: logical_structure(file_set_id))
+      change_set.validate(logical_structure: logical_structure(@file_set_id))
       change_set.sync
       change_set_persister.save(change_set: change_set)
     end
@@ -70,6 +70,7 @@ RSpec.describe ManifestBuilder do
       expect(output["viewingDirection"]).to eq "right-to-left"
       expect(output["rendering"]).to include "@id" => "http://arks.princeton.edu/ark:/88435/abc1234de", "format" => "text/html"
       expect(output["sequences"].length).to eq 1
+      expect(output["sequences"][0]["startCanvas"]).to eq nil
       canvas_id = output["sequences"][0]["canvases"][0]["@id"]
       expect(output["structures"].length).to eq 3
       structure_canvas_id = output["structures"][2]["canvases"][0]
@@ -117,6 +118,17 @@ RSpec.describe ManifestBuilder do
         first_image = output["sequences"][0]["canvases"][0]["images"][0]
         expect(output["thumbnail"]).not_to be_blank
         expect(output["thumbnail"]["@id"]).to eq "#{first_image['resource']['service']['@id']}/full/!200,150/0/default.jpg"
+      end
+    end
+
+    context "when start_canvas is set" do
+      let(:scanned_resource) do
+        FactoryGirl.create_for_repository(:scanned_resource,
+                                          start_canvas: [@file_set_id])
+      end
+      it 'is listed in the sequence' do
+        output = manifest_builder.build
+        expect(output["sequences"][0]["startCanvas"]).to eq output["sequences"][0]["canvases"][0]["@id"]
       end
     end
 
