@@ -1,26 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { shallow, createLocalVue } from 'vue-test-utils'
-import Detail from '@/components/Detail'
+import Detail from '@/components/Thumbnails'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-describe('Detail.vue', () => {
+describe('Thumbnails.vue', () => {
   let cmp
 
   beforeEach(() => {
-    cmp = shallow(Detail, {
+    cmp = mount(Thumbnails, {
       computed: {
-        selected: {
+        thumbnails: {
           get () {
-            return [
-              {
-                "id": "50b5e49b-ade7-4278-8265-4f72081f26a5",
-                "url": "http://localhost:3000/image-service/50b5e49b-ade7-4278-8265-4f72081f26a5/full/400,/0/default.jpg",
-                "label": "1",
-                "pageType": "single"
-              }
-            ]
+            return this.$store.state.images
+          },
+          set (value) {
+            this.$store.dispatch('sortImages', value)
           }
         }
       },
