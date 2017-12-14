@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Thumbnails.vue has the expected html structure 1`] = `
+<div
+  class="img_gallery"
+  name="list-complete"
+  tag="div"
+>
+  <div
+    class="thumbnail"
+    style="max-width: 200px;"
+  >
+    <img
+      class="thumb"
+      src="http://example.com"
+    />
+     
+    <div
+      class="caption"
+      style="padding: 9px;"
+    >
+      
+        baz
+      
+    </div>
+  </div>
+  <div
+    class="thumbnail"
+    style="max-width: 200px;"
+  >
+    <img
+      class="thumb"
+      src="http://example.com"
+    />
+     
+    <div
+      class="caption"
+      style="padding: 9px;"
+    >
+      
+        p. foo
+      
+    </div>
+  </div>
+</div>
+`;
