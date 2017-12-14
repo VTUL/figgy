@@ -10,25 +10,32 @@ describe('Thumbnails.vue', () => {
   let wrapper
   let options
   let actions
+  let state
   let store
 
   beforeEach(() => {
     actions = {
-      actionClick: jest.fn(),
-      actionInput: jest.fn()
+      handleSelect: jest.fn(),
+      sortImages: jest.fn()
+    }
+    state = {
+      images: Fixtures.imageCollection,
+      selected: Fixtures.selected,
+      ogImages: Fixtures.imageCollection,
+      changeList: Fixtures.changeList
     }
     store = new Vuex.Store({
-      state: {
-        images: Fixtures.imageCollection,
-        selected: Fixtures.selected,
-        ogImages: Fixtures.imageCollection,
-        changeList: Fixtures.changeList
-      },
+      state,
       actions
     })
 
     options = {
       computed: {
+        thumbnails: {
+          get () {
+            return state.imageCollection
+          }
+        },
         thumbnails: {
           get () {
             return state.imageCollection
@@ -50,19 +57,34 @@ describe('Thumbnails.vue', () => {
   })
 
   it('renders a $store.state value return from computed', () => {
-    const wrapper = shallow(Thumbnails, { options, store, localVue })
+    const wrapper = mount(Thumbnails, { options, store, localVue })
     let expanded = wrapper.find('.thumbnail')
     const thumb = expanded.html().replace(/(<(pre|script|style|textarea)[^]+?<\/\2)|(^|>)\s+|\s+(?=<|$)/g, "$1$3")
     expect(thumb).toEqual('<div class="thumbnail" style="max-width: 200px;"><img src="http://example.com" class="thumb"><div class="caption" style="padding: 9px;">baz</div></div>')
   })
 
   it('has the expected html structure', () => {
-    const wrapper = shallow(Thumbnails, { options, store, localVue })
+    const wrapper = mount(Thumbnails, { options, store, localVue })
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  // it('selectedImageUrl function has the expected value', () => {
-  //   expect(wrapper.vm.selectedImageUrl).toEqual("http://localhost:3000/image-service/50b5e49b-ade7-4278-8265-4f72081f26a5/full/400,/0/default.jpg")
-  // })
+  it('allows the selection of a thumbnail', () => {
+    const wrapper = mount(Thumbnails, { options, store, localVue })
+    wrapper.find('.thumbnail').trigger('click')
+    expect(state.selected).toHaveLength(1)
+    expect(actions.handleSelect).toHaveBeenCalled()
+  })
+
+  it('allows the selection of multiple thumbnails via Shift+click', () => {
+    const wrapper = mount(Thumbnails, { options, store, localVue })
+    wrapper.findAll('.thumbnail').at(0).trigger('click')
+    wrapper.findAll('.thumbnail').at(1).trigger('click.capture', {
+      shiftKey: true
+    })
+    expect(state.selected).toHaveLength(2)
+  })
+
+  // Todo: once the above can pass write one for selection of multiples via META+click
+
 
 })

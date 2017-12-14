@@ -1,21 +1,25 @@
 <template>
-  <div v-model="thumbnails" tag="div" name="list-complete" class="img_gallery">
+  <draggable v-model="thumbnails" tag="div" name="list-complete" class="img_gallery">
       <div @click.capture="select(thumbnail.id, $event)"
             v-bind:style="{'max-width': thumbPixelWidth + 'px' }"
             class="thumbnail"
-            v-bind:class="{ hasChanged: hasChanged(thumbnail.id) }"
+            v-bind:class="{ hasChanged: hasChanged(thumbnail.id), selected: isSelected(thumbnail) }"
             v-for="thumbnail in thumbnails" :key="thumbnail.id">
         <img :src="thumbnail.url" class="thumb">
         <div v-bind:style="{'padding': captionPixelPadding + 'px' }" class="caption">
           {{thumbnail.label}}
         </div>
       </div>
-  </div>
+  </draggable>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 export default {
   name: 'thumbnails',
+  components: {
+    draggable
+  },
   data: function () {
     return {
       thumbPixelWidth: 200,
@@ -26,6 +30,9 @@ export default {
     thumbnails: {
       get () {
         return this.$store.state.images
+      },
+      set (value) {
+        this.$store.dispatch('sortImages', value)
       }
     },
     changeList: {
@@ -40,6 +47,15 @@ export default {
     }
   },
   methods: {
+    getImageById: function (id) {
+      var elementPos = this.getImageIndexById(id)
+      return this.thumbnails[elementPos]
+    },
+    getImageIndexById: function (id) {
+      return this.thumbnails.map(function (image) {
+        return image.id
+      }).indexOf(id)
+    },
     hasChanged: function (id) {
       if (this.changeList.indexOf(id) > -1) {
         return true
@@ -48,12 +64,32 @@ export default {
       }
     },
     isSelected: function (thumbnail) {
-      return false
-      // if (this.selected.indexOf(thumbnail) > -1) {
-      //   return true
-      // } else {
-      //   return false
-      // }
+      if (this.selected.indexOf(thumbnail) > -1) {
+        return true
+      } else {
+        return false
+      }
+    },
+    select: function (id, event) {
+      var selected = []
+      if (event.metaKey) {
+        selected = this.selected
+        selected.push(this.getImageById(id))
+        this.$store.dispatch('handleSelect', selected)
+      } else {
+        if (this.selected.length === 1 && event.shiftKey) {
+          var first = this.getImageIndexById(this.selected[0].id)
+          var second = this.getImageIndexById(id)
+          var min = Math.min(first, second)
+          var max = Math.max(first, second)
+          for (var i = min; i <= max; i++) {
+            selected.push(this.thumbnails[i])
+          }
+          this.$store.dispatch('handleSelect', selected)
+        } else {
+          this.$store.dispatch('handleSelect', [this.getImageById(id)])
+        }
+      }
     }
   }
 }

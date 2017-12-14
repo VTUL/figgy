@@ -135,6 +135,15 @@ const actions = {
 }
 
 const getters = {
+  // getImageById: (state,getters,id) => {
+  //   var elementPos = getters.getImageIndexById(state,id)
+  //   return state.images[elementPos]
+  // },
+  // getImageIndexById: (state,id) => {
+  //   return state.images.map(function (image) {
+  //     return image.id
+  //   }).indexOf(id)
+  // },
   imageIdList: state => {
     return state.images.map(image => image.id)
   },
