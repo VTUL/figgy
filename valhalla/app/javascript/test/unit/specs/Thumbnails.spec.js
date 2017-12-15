@@ -16,6 +16,7 @@ describe('Thumbnails.vue', () => {
   beforeEach(() => {
     actions = {
       handleSelect: jest.fn(),
+      resizeThumbs: jest.fn(()=>{event: {target: {value: '100'}}}),
       sortImages: jest.fn()
     }
     state = {
@@ -33,12 +34,7 @@ describe('Thumbnails.vue', () => {
       computed: {
         thumbnails: {
           get () {
-            return state.imageCollection
-          }
-        },
-        thumbnails: {
-          get () {
-            return state.imageCollection
+            return state.images
           }
         },
         changelist: {
@@ -71,20 +67,56 @@ describe('Thumbnails.vue', () => {
   it('allows the selection of a thumbnail', () => {
     const wrapper = mount(Thumbnails, { options, store, localVue })
     wrapper.find('.thumbnail').trigger('click')
-    expect(state.selected).toHaveLength(1)
     expect(actions.handleSelect).toHaveBeenCalled()
   })
 
   it('allows the selection of multiple thumbnails via Shift+click', () => {
     const wrapper = mount(Thumbnails, { options, store, localVue })
     wrapper.findAll('.thumbnail').at(0).trigger('click')
-    wrapper.findAll('.thumbnail').at(1).trigger('click.capture', {
+    wrapper.findAll('.thumbnail').at(1).trigger('click', {
       shiftKey: true
     })
-    expect(state.selected).toHaveLength(2)
+    //expect(actions.handleSelect).toHaveBeenCalled()
+    console.log(actions.handleSelect.mock.calls[0][0].boundDispatch)
+    console.log(actions.handleSelect.mock.calls[1][0].boundDispatch)
+    expect(actions.handleSelect.mock.calls.length).toBe(2)
+
   })
 
   // Todo: once the above can pass write one for selection of multiples via META+click
+
+  it('selects all thumbnails when Select All button is clicked', () => {
+    const wrapper = mount(Thumbnails, { options, store, localVue })
+    wrapper.find('#select_all_btn').trigger('click')
+    expect(actions.handleSelect).toHaveBeenCalled()
+  })
+
+  it('selects alternate thumbnails when Select Alternate button is clicked', () => {
+    const wrapper = mount(Thumbnails, { options, store, localVue })
+    wrapper.find('#select_alternate_btn').trigger('click')
+    expect(actions.handleSelect).toHaveBeenCalled()
+  })
+
+  it('selects inverse thumbnails when Select Inverse button is clicked', () => {
+    const wrapper = mount(Thumbnails, { options, store, localVue })
+    wrapper.find('#select_inverse_btn').trigger('click')
+    expect(actions.handleSelect).toHaveBeenCalled()
+  })
+
+  it('deselects all thumbnails when Select None button is clicked', () => {
+    const wrapper = mount(Thumbnails, { options, store, localVue })
+    wrapper.find('#select_none_btn').trigger('click')
+    expect(actions.handleSelect).toHaveBeenCalled()
+  })
+
+  it('changes thumbnail size when range input changes', () => {
+    const wrapper = mount(Thumbnails, { options, store, localVue })
+    const input = wrapper.find('#resize_thumbs_input')
+    input.element.value = 100
+    input.trigger('input')
+    const resizedThumb = wrapper.find('.thumbnail')
+    expect(resizedThumb.hasStyle('max-width', '100px')).toBe(true)
+  })
 
 
 })

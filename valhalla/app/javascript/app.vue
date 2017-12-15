@@ -1,8 +1,7 @@
 <template>
   <div id="filemanager">
-    <thumbnails></thumbnails>
     <flash :timeout="10000" :display-icons="true" transition="fade"></flash>
-    <gallery></gallery>
+    <thumbnails></thumbnails>
     <detail></detail>
     <panel></panel>
     <controls></controls>
@@ -11,7 +10,7 @@
 
 <script>
 import Thumbnails from './components/Thumbnails'
-import Gallery from './components/Gallery'
+//import Gallery from './components/Gallery'
 import Detail from './components/Detail'
 import Panel from './components/Panel'
 import Controls from './components/Controls'
@@ -20,7 +19,7 @@ export default {
   name: 'app',
   components: {
     Thumbnails,
-    Gallery,
+  //  Gallery,
     Detail,
     Panel,
     Controls

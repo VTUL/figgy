@@ -2,7 +2,7 @@
   "name": "filemanager-rails",
   "private": true,
   "scripts": {
-    "unit": "jest valhalla/app/javascript/test/unit/specs --coverage --no-cache",
+    "unit": "jest valhalla/app/javascript/test/unit/specs --coverage",
     "test": "npm run unit"
   },
   "jest": {
