@@ -76,22 +76,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-.form-inline fieldset {
-  display: inline-block;
-}
-
-.form-inline .row {
-  margin-top:15px;
-}
-
-#singleSelected .form-group {
-  line-height: 3em;
-}
-
-.checkbox {
-  display: block;
-}
-
 fieldset {
   margin: auto;
 }

@@ -115,10 +115,6 @@ export default {
   margin-top:15px;
 }
 
-#singleSelected .form-group {
-  line-height: 3em;
-}
-
 .checkbox {
   display: block;
 }
