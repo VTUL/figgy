@@ -9,7 +9,7 @@
           <div v-for="viewDir in viewDirs">
             <div class="radio">
               <label>
-                <input @change="updateViewDir($event)" v-model="viewingDirection" type="radio" name="viewDir" :value="viewDir.label">
+                <input class="viewDirInput" @change="updateViewDir($event)" v-model="viewingDirection" type="radio" name="viewDir" :value="viewDir.label">
                 {{viewDir.label}}
               </label>
             </div>
@@ -23,7 +23,7 @@
           <div v-for="viewHint in viewHints">
             <div class="radio">
               <label>
-                <input @change="updateViewHint($event)" v-model="viewingHint" type="radio" name="viewHint" :value="viewHint.label">
+                <input class="viewHintInput" @change="updateViewHint($event)" v-model="viewingHint" type="radio" name="viewHint" :value="viewHint.label">
                 {{viewHint.label}}
               </label>
             </div>

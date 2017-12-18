@@ -71,9 +71,6 @@ export default {
     }
   },
   computed: {
-    thumbnail: function () {
-      return this.$store.state.thumbnail
-    },
     selectedTotal () {
       return this.$store.state.selected.length
     }

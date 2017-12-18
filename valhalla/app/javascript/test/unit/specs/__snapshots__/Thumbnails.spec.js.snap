@@ -2,7 +2,7 @@
 
 exports[`Thumbnails.vue has the expected html structure 1`] = `
 <div
-  class="content"
+  class="gallery"
 >
   <div
     class="gallery_controls"
@@ -133,7 +133,7 @@ exports[`Thumbnails.vue has the expected html structure 1`] = `
         style="padding: 9px;"
       >
         
-          p. foo
+          foo
         
       </div>
     </div>

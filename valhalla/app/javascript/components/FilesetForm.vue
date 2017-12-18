@@ -2,7 +2,7 @@
   <div>
     <h2>Edit <small>the selected item</small></h2>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <form class="formContent form-inline">
           <div class="form-group">
             <label class="control-label" for="label">Label</label>
@@ -34,8 +34,8 @@
           <input id="canvas_id" type="hidden" name="canvas_id">
         </form>
       </div>
-      <div class="col-md-6">
-          <a :href="singleForm.editLink" class="btn btn-default btn-lg">Replace or Delete File</a>
+      <div class="col-md-12">
+          <a :href="singleForm.editLink" id="replace-file-button" class="btn btn-default btn-lg">Replace or Delete File</a>
       </div>
     </div>
   </div>
@@ -45,6 +45,12 @@
 export default {
   name: 'fileset-form',
   computed: {
+    thumbnail: function () {
+      return this.$store.state.thumbnail
+    },
+    startPage: function () {
+      return this.$store.state.startPage
+    },
     isStartPage () {
       var id = this.$store.state.selected[0].id
       return this.$store.state.startPage === id
@@ -108,6 +114,10 @@ export default {
 
 .checkbox {
   display: block;
+}
+
+#replace-file-button {
+  margin-bottom: 10px;
 }
 
 </style>

@@ -25,6 +25,8 @@
     "coverageDirectory": "<rootDir>valhalla/app/javascript/test/unit/coverage",
     "collectCoverageFrom": [
       "valhalla/app/javascript/components/**/*.{js,vue}",
+      "valhalla/app/javascript/store/vuex/**/*.{js,vue}",
+      "valhalla/app/javascript/mixins/**/*.{js,vue}",
       "!valhalla/app/javascript/app.vue",
       "!valhalla/app/javascript/packs/filemanager.js",
       "!**/node_modules/**"

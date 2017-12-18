@@ -1,28 +1,20 @@
 <template>
   <div id="filemanager">
-    <flash :timeout="10000" :display-icons="true" transition="fade"></flash>
+    <flash :timeout="5000" :display-icons="true" transition="fade"></flash>
+    <sidepanel></sidepanel>
     <thumbnails></thumbnails>
-    <detail></detail>
-    <panel></panel>
-    <controls></controls>
   </div>
 </template>
 
 <script>
 import Thumbnails from './components/Thumbnails'
-//import Gallery from './components/Gallery'
-import Detail from './components/Detail'
-import Panel from './components/Panel'
-import Controls from './components/Controls'
+import Sidepanel from './components/SidePanel'
 
 export default {
   name: 'app',
   components: {
     Thumbnails,
-  //  Gallery,
-    Detail,
-    Panel,
-    Controls
+    Sidepanel
   }
 }
 </script>
@@ -57,42 +49,24 @@ export default {
   overflow-y: auto;
 }
 
-.formPanel {
+.sidePanel {
   position: absolute;
-  bottom: 10px;
-  left: 0;
-  height: 25%;
-  width: 60%;
+  top: 20px;
+  right: 10px;
+  height: 95%;
+  width: 28.5%;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.controls {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  height: 25%;
-  width: 38.5%;
-}
-
-.content {
+.gallery {
   position: relative;
   top: 20px;
   left: 0;
-  height: 70%;
-  width: 60%;
+  height: 95%;
+  width: 70%;
   border-radius: 4px;
   border: 1px solid #ddd;
-}
-
-.sidebar {
-  position: absolute;
-  top: 20px;
-  right: 10px;
-  height: 70%;
-  width: 38.5%;
-  border: 1px solid #ddd;
-  border-radius: 4px;
 }
 
 </style>

@@ -1,6 +1,5 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
-import { mount, shallow, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from 'vue-test-utils'
 import Thumbnails from '@/components/Thumbnails'
 import Fixtures from '@/test/fixtures/image-collection'
 const localVue = createLocalVue()
@@ -23,7 +22,7 @@ describe('Thumbnails.vue', () => {
       images: Fixtures.imageCollection,
       selected: Fixtures.selected,
       ogImages: Fixtures.imageCollection,
-      changeList: Fixtures.changeList
+      changeList: Fixtures.emptyChangeList
     }
     store = new Vuex.Store({
       state,
@@ -76,9 +75,10 @@ describe('Thumbnails.vue', () => {
     wrapper.findAll('.thumbnail').at(1).trigger('click', {
       shiftKey: true
     })
-    //expect(actions.handleSelect).toHaveBeenCalled()
-    console.log(actions.handleSelect.mock.calls[0][0].boundDispatch)
-    console.log(actions.handleSelect.mock.calls[1][0].boundDispatch)
+
+    // the first click selects one element, while the second sekects two (with Shift+Click)
+    expect(actions.handleSelect.mock.calls[0][1].length).toBe(1)
+    expect(actions.handleSelect.mock.calls[1][1].length).toBe(2)
     expect(actions.handleSelect.mock.calls.length).toBe(2)
 
   })

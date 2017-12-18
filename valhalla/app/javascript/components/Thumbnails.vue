@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="gallery">
     <div class="gallery_controls">
       <div class="dropdown">
         <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="selectOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
