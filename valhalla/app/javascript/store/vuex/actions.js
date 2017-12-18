@@ -1,20 +1,16 @@
 // actions
 import axios from 'axios'
 import manifesto from 'manifesto.js'
-import mixins from '../mixins/manifesto-filemanager-mixins'
+import mixins from '../../mixins/manifesto-filemanager-mixins'
 import Pluralize from 'pluralize'
 
 const actions = {
-  incrementAsync ({ commit }) {
-    setTimeout(() => {
-      commit('INCREMENT')
-    }, 200)
-  },
   loadImageCollection (context, resource) {
     const manifest_uri = '/concern/'+ resource.class_name + '/' + resource.id + '/manifest'
     axios.get(manifest_uri).then((response) => {
       const manifestation = Object.assign(manifesto.create(JSON.stringify(response.data)), mixins)
       window.manifestation = manifestation
+      console.log(JSON.stringify(manifestation.imageCollection(resource)))
       context.commit('SET_STATE', manifestation.imageCollection(resource) )
     }, (err) => {
       console.log(err)
