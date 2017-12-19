@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Generate Labels <small>for selected items</small></h2>
-    <form class="formContent form-inline">
+    <form class="formContent">
       <div class="row">
         <div class="form-group">
           <label class="control-label" for="unitLabel">Unit Label</label>

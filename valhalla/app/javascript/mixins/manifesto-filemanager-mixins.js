@@ -1,4 +1,4 @@
-import default_image from 'default.png'
+//import default_image from 'default.png'
 import Pluralize from 'pluralize'
 
 const ManifestoFilemanagerMixins = {
@@ -12,7 +12,7 @@ const ManifestoFilemanagerMixins = {
 
   getCanvasMainThumb: function (canvas) {
     const images = canvas.getImages()
-    var thumb = default_image
+    var thumb = '/packs/_/_/_/app/assets/images/default-1927ff44629d419a4bb2dfdc4317a78a.png'// default_image
     var services = images[0].getResource().getServices()
     if (services.length) {
       thumb = services[0].id + '/full/400,/0/default.jpg'

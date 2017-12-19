@@ -10,7 +10,7 @@ exports[`FilesetsForm.vue has the expected html structure 1`] = `
   </h2>
    
   <form
-    class="formContent form-inline"
+    class="formContent"
   >
     <div
       class="row"
