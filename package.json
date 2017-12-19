@@ -6,6 +6,7 @@
     "test": "npm run unit"
   },
   "jest": {
+    "roots": ["<rootDir>", "<rootDir>/valhalla/app/javascript/test"],
     "moduleFileExtensions": [
       "js",
       "json",

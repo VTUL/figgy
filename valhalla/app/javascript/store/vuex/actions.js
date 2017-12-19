@@ -7,7 +7,7 @@ import Pluralize from 'pluralize'
 const actions = {
   loadImageCollection (context, resource) {
     const manifest_uri = '/concern/'+ resource.class_name + '/' + resource.id + '/manifest'
-    axios.get(manifest_uri).then((response) => {
+    return axios.get(manifest_uri).then((response) => {
       const manifestation = Object.assign(manifesto.create(JSON.stringify(response.data)), mixins)
       window.manifestation = manifestation
       context.commit('SET_STATE', manifestation.imageCollection(resource) )
@@ -31,7 +31,7 @@ const actions = {
       file_set_promises.push(axios.patch('/concern/file_sets/' + body.file_sets[i].id, body.file_sets[i]))
     }
     let resourceClassNames = Object.keys(body.resource)
-    axios.patch('/concern/' + Pluralize.plural(resourceClassNames[0]) + '/' + body.resource[resourceClassNames[0]].id, body.resource).then((response) => {
+    let foo = axios.patch('/concern/' + Pluralize.plural(resourceClassNames[0]) + '/' + body.resource[resourceClassNames[0]].id, body.resource).then((response) => {
       axios.all(file_set_promises).then(axios.spread((...args) => {
         context.commit('SAVE_STATE', [])
       }, (err) => {
@@ -40,6 +40,8 @@ const actions = {
     }, (err) => {
       alert(errors.join('\n'))
     })
+    console.log(foo)
+    return foo
   },
   sortImages (context, value) {
     context.commit('SORT_IMAGES', value)
