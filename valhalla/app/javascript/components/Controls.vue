@@ -45,6 +45,7 @@ export default {
         viewing_direction: this.$store.state.viewingDirection,
         id: this.$store.state.id
       }
+      
       this.$store.dispatch('saveState', body)
     }
   }

@@ -102,6 +102,58 @@ export const initState = {
   ]
 }
 
+export const body = {
+  "resource": {
+    "ephemera_folder": {
+      "member_ids": [
+        "50b5e49b-ade7-4278-8265-4f72081f26a5",
+        "0a3e268f-5872-444e-bdbd-b1a7b01dcb57",
+        "e7208ea3-21f3-43d4-9b14-489e15e9791e",
+        "dae7619f-16a7-4306-93e4-70b4b192955c",
+        "b484cd88-fdf2-477c-afe9-d46a49d8822b",
+        "80b02791-4bd9-4566-9a9f-4b3062ba2e0d"
+      ],
+      "thumbnail_id": "80b02791-4bd9-4566-9a9f-4b3062ba2e0d",
+      "start_canvas": "",
+      "viewing_hint": "individuals",
+      "viewing_direction": "right-to-left",
+      "id": "9a25e0ce-4f64-4995-bae5-29140a453fa3"
+    }
+  },
+  "file_sets": [
+    {
+      "id": "50b5e49b-ade7-4278-8265-4f72081f26a5",
+      "title": "p. i",
+      "page_type": "single"
+    },
+    {
+      "id": "0a3e268f-5872-444e-bdbd-b1a7b01dcb57",
+      "title": "p. ii",
+      "page_type": "single"
+    },
+    {
+      "id": "e7208ea3-21f3-43d4-9b14-489e15e9791e",
+      "title": "p. iii",
+      "page_type": "single"
+    },
+    {
+      "id": "dae7619f-16a7-4306-93e4-70b4b192955c",
+      "title": "p. iv",
+      "page_type": "single"
+    },
+    {
+      "id": "b484cd88-fdf2-477c-afe9-d46a49d8822b",
+      "title": "p. v",
+      "page_type": "single"
+    },
+    {
+      "id": "80b02791-4bd9-4566-9a9f-4b3062ba2e0d",
+      "title": "p. vi",
+      "page_type": "single"
+    }
+  ]
+}
+
 const fixtures = {
   imageCollection,
   emptyChangeList,
@@ -111,7 +163,8 @@ const fixtures = {
   sortedImages,
   thumbnail,
   startPage,
-  initState
+  initState,
+  body
 }
 
 export default fixtures
