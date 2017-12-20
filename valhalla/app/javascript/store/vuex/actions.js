@@ -21,27 +21,34 @@ const actions = {
   saveState (context, body) {
     window.body = body
     let errors = []
-    let token = document.getElementsByName('csrf-token')[0].getAttribute('content')
-    console.log(token)
+    let token
+    if (!document.getElementsByName('csrf-token')[0]){
+      // token needs some value for tests that do not have a real DOM
+      token = 'stub'
+    } else {
+      token = document.getElementsByName('csrf-token')[0].getAttribute('content')
+    }
+
     axios.defaults.headers.common['X-CSRF-Token'] = token
     axios.defaults.headers.common['Accept'] = 'application/json'
-
     let file_set_promises = []
     for (let i = 0; i < body.file_sets.length; i++) {
       file_set_promises.push(axios.patch('/concern/file_sets/' + body.file_sets[i].id, body.file_sets[i]))
     }
     let resourceClassNames = Object.keys(body.resource)
-    let foo = axios.patch('/concern/' + Pluralize.plural(resourceClassNames[0]) + '/' + body.resource[resourceClassNames[0]].id, body.resource).then((response) => {
-      axios.all(file_set_promises).then(axios.spread((...args) => {
-        context.commit('SAVE_STATE', [])
-      }, (err) => {
-        alert(errors.join('\n'))
-      }))
-    }, (err) => {
-      alert(errors.join('\n'))
-    })
-    console.log(foo)
-    return foo
+    return axios.patch('/concern/' + Pluralize.plural(resourceClassNames[0]) + '/' + body.resource[resourceClassNames[0]].id, body.resource)
+      .then((response) => {
+        return axios.all(file_set_promises)
+          .then(([...args]) => {
+            context.commit('SAVE_STATE', [])
+          }).catch(
+            (error) => {
+              console.log(error);
+            })
+      }).catch(
+        (error) => {
+          console.log(error);
+        })
   },
   sortImages (context, value) {
     context.commit('SORT_IMAGES', value)
