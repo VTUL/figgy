@@ -19,6 +19,10 @@ describe('SidePanel.vue', () => {
     })
   })
 
+  it('selectedTotal function has the expected value', () => {
+    expect(wrapper.vm.selectedTotal).toBe(2)
+  })
+
   it('has the expected html structure', () => {
     expect(wrapper.element).toMatchSnapshot()
   })

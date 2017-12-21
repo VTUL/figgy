@@ -19,18 +19,19 @@ describe('Controls.vue', () => {
     }
     getters = {
       orderChanged: () => false,
-      stateChanged: () => false
+      stateChanged: () => false,
+      imageIdList: () => ['e7208ea3-21f3-43d4-9b14-489e15e9791e',
+                          '50b5e49b-ade7-4278-8265-4f72081f26a5',
+                          'dae7619f-16a7-4306-93e4-70b4b192955c',
+                          'b484cd88-fdf2-477c-afe9-d46a49d8822b',
+                          '80b02791-4bd9-4566-9a9f-4b3062ba2e0d',
+                          '0a3e268f-5872-444e-bdbd-b1a7b01dcb57']
     }
-    // state = {
-    //   images: Fixtures.imageCollection,
-    //   selected: Fixtures.selected,
-    //   changeList: Fixtures.changeList,
-    //   thumbnail: Fixtures.thumbnail,
-    //   startPage: Fixtures.startPage
-    // }
+    state = Fixtures.initState
     store = new Vuex.Store({
       getters,
-      actions
+      actions,
+      state
     })
 
     options = {
@@ -44,39 +45,38 @@ describe('Controls.vue', () => {
           } else {
             return true
           }
-        },
-        // fileSetPayload: function () {
-        //   var changed = state.images.filter(image => state.changeList.indexOf(image.id) !== -1 )
-        //   var payload = changed.map((file) => {
-        //     return {id: file.id, title: file.label, page_type: file.page_type }
-        //   })
-        //   return payload
-        // }
+        }
       }
     }
   })
 
   it('will not allow save when nothing has changed', () => {
     const wrapper = mount(Controls, { options, store, localVue })
-    wrapper.find('#save_btn').trigger('click')
-    expect(actions.saveState).not.toHaveBeenCalled()
+    expect(wrapper.vm.isDisabled).toBeTruthy()
   })
 
-  // todo: make sure saveState button can be tested
-  // it('allows save once something has changed', () => {
-  //   getters = {
-  //     orderChanged: () => true,
-  //     stateChanged: () => true
-  //   }
-  //   store = new Vuex.Store({
-  //     getters,
-  //     actions
-  //   })
-  //   const wrapper = mount(Controls, { options, store, localVue })
-  //   console.log(wrapper.vm.isDisabled) // false
-  //   wrapper.find('#save_btn').trigger('click')
-  //   expect(actions.saveState).toHaveBeenCalled() // why isn't it called?
-  // })
+  // make sure saveState button can be tested
+  it('allows save once something has changed', () => {
+    actions = {
+      saveState: jest.fn()
+    }
+    getters = {
+      orderChanged: () => true,
+      stateChanged: () => true
+    }
+    state = Fixtures.initState
+    store = new Vuex.Store({
+      getters,
+      actions,
+      state
+    })
+
+    const wrapper = mount(Controls, { options, store, localVue })
+
+    expect(wrapper.find('#save_btn').exists()).toBeTruthy()
+    wrapper.find('#save_btn').trigger('click')
+    expect(actions.saveState).toHaveBeenCalled()
+  })
 
   it('has the expected html structure', () => {
     const wrapper = mount(Controls, { options, store, localVue })

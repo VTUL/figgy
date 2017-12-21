@@ -62,6 +62,7 @@ export const initState = {
   "thumbnail": "80b02791-4bd9-4566-9a9f-4b3062ba2e0d",
   "viewingDirection": "left-to-right",
   "viewingHint": "individuals",
+  "changeList" : [],
   "images": [
     {
       "label": "[p. i (recto)]",

@@ -58,8 +58,4 @@ describe('ResourceForm.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  // it('selectedImageUrl function has the expected value', () => {
-  //   expect(cmp.vm.selectedImageUrl).toEqual("http://localhost:3000/image-service/50b5e49b-ade7-4278-8265-4f72081f26a5/full/400,/0/default.jpg")
-  // })
-
 })
