@@ -16,16 +16,8 @@ class EphemeraBoxDecorator < Valkyrie::ResourceDecorator
     "Box #{box_number.first}"
   end
 
-  def members
-    @members ||= query_service.find_members(resource: model).to_a
-  end
-
-  def folders
-    @folders ||= members.select { |r| r.is_a?(EphemeraFolder) }.map(&:decorate).to_a
-  end
-
   def ephemera_projects
-    @ephemera_projects ||= query_service.find_parents(resource: model).map(&:decorate).to_a
+    decorated_parents
   end
 
   def collection_slugs
@@ -33,7 +25,7 @@ class EphemeraBoxDecorator < Valkyrie::ResourceDecorator
   end
 
   def ephemera_project
-    @ephemera_box ||= query_service.find_parents(resource: model).to_a.first.try(:decorate) || NullProject.new
+    @ephemera_project ||= ephemera_projects.first || NullProject.new
   end
 
   class NullProject

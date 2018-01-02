@@ -38,8 +38,8 @@ RSpec.describe EphemeraBoxDecorator do
     end
     let(:resource) { FactoryBot.create_for_repository(:ephemera_box, member_ids: [folder.id]) }
     it 'retrieves folders' do
-      expect(resource.decorate.folders.to_a).not_to be_empty
-      expect(resource.decorate.folders.to_a.first).to be_a EphemeraFolder
+      expect(resource.decorate.decorated_ephemera_folders.to_a).not_to be_empty
+      expect(resource.decorate.decorated_ephemera_folders.to_a.first).to be_a EphemeraFolder
     end
   end
 end

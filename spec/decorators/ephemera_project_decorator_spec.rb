@@ -45,7 +45,7 @@ RSpec.describe EphemeraProjectDecorator do
     let(:resource) { FactoryBot.create_for_repository(:ephemera_project, member_ids: [box.id, folder.id]) }
 
     it "provides access to folders" do
-      expect(decorator.folders.map(&:id)).to eq([folder.id])
+      expect(decorator.decorated_ephemera_folders.map(&:id)).to eq([folder.id])
     end
 
     it "provides access to boxes" do

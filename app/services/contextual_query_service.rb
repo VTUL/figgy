@@ -7,13 +7,13 @@ class ContextualQueryService
     methods.each do |method|
       define_method :"decorated_#{method}" do
         output = instance_variable_get(:"@decorated_#{method}") ||
-          __send__(method).map(&:decorate)
+                 __send__(method).map(&:decorate)
         instance_variable_set(:"@decorated_#{method}", output)
       end
     end
   end
 
-  decorates_methods :members, :volumes, :file_sets, :parents, :member_of_collections
+  decorates_methods :members, :volumes, :file_sets, :parents, :member_of_collections, :collection_members, :ephemera_folders
 
   def initialize(resource:, query_service:)
     @resource = resource
@@ -26,11 +26,19 @@ class ContextualQueryService
   end
 
   def volumes
-    @volumes ||= members.select { |r| r.is_a?(ScannedResource) }.to_a
+    @volumes ||= members_of_type(type: ScannedResource)
   end
 
   def file_sets
-    @file_sets ||= members.select { |r| r.is_a?(FileSet) }.to_a
+    @file_sets ||= members_of_type(type: FileSet)
+  end
+
+  def ephemera_folders
+    @ephemera_folders ||= members_of_type(type: EphemeraFolder)
+  end
+
+  def members_of_type(type:)
+    members.select { |r| r.is_a?(type) }.to_a
   end
 
   def parents
@@ -41,5 +49,9 @@ class ContextualQueryService
     return [] unless resource.respond_to?(:member_of_collection_ids)
     @member_of_collections ||=
       query_service.find_references_by(resource: resource, property: :member_of_collection_ids).to_a
+  end
+
+  def collection_members
+    @collection_members ||= query_service.find_inverse_references_by(resource: resource, property: :member_of_collection_ids).to_a
   end
 end

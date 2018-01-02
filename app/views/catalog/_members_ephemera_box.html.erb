@@ -16,8 +16,8 @@
     </tr>
     </thead>
     <tbody>
-    <% unless decorated_resource.folders.empty? %>
-      <% decorated_resource.folders.each do |folder| %>
+    <% unless decorated_resource.decorated_ephemera_folders.empty? %>
+      <% decorated_resource.decorated_ephemera_folders.each do |folder| %>
         <% folder_url = parent_solr_document_path("#{resource.id}", "#{folder.id}") %>
         <tr>
           <% if decorated_resource.is_a?(EphemeraBox) %>

@@ -9,15 +9,8 @@ class CollectionDecorator < Valkyrie::ResourceDecorator
   end
 
   def members
-    @members ||= query_service.find_inverse_references_by(resource: model, property: :member_of_collection_ids).to_a
+    contextual_query_service.collection_members
   end
-
-  # Nested collections are not currently supported
-  def parents
-    []
-  end
-
-  alias collections parents
 
   def slug
     Array.wrap(super).first

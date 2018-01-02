@@ -9,6 +9,7 @@ RSpec.describe ContextualQueryService do
   let(:resource) { FactoryBot.create_for_repository(:scanned_resource, member_ids: child.id, member_of_collection_ids: collection.id) }
   let(:child) { FactoryBot.create_for_repository(:scanned_resource, files: [file]) }
   let(:collection) { FactoryBot.create_for_repository(:collection) }
+  let(:collection_query_service) { described_class.new(resource: collection, query_service: query_service) }
   let(:file) { fixture_file_upload('files/example.tif', 'image/tiff') }
 
   describe ".members" do
@@ -59,6 +60,28 @@ RSpec.describe ContextualQueryService do
     end
     it "can decorate collections" do
       expect(contextual_query_service.decorated_member_of_collections.first).to be_a CollectionDecorator
+    end
+  end
+
+  describe ".collection_members" do
+    it "returns all objects that are a member of the collection" do
+      resource
+      expect(collection_query_service.collection_members.map(&:id)).to eq [resource.id]
+    end
+    it "can decorate them" do
+      resource
+      expect(collection_query_service.decorated_collection_members.first).to be_a ScannedResourceDecorator
+    end
+  end
+
+  describe ".ephemera_folders" do
+    let(:resource) { FactoryBot.create_for_repository(:ephemera_box, member_ids: child.id, member_of_collection_ids: collection.id) }
+    let(:child) { FactoryBot.create_for_repository(:ephemera_folder) }
+    it "returns all ephemera folders" do
+      expect(contextual_query_service.ephemera_folders.map(&:id)).to eq [child.id]
+    end
+    it "can decorate folders" do
+      expect(contextual_query_service.decorated_ephemera_folders.first).to be_a EphemeraFolderDecorator
     end
   end
 end

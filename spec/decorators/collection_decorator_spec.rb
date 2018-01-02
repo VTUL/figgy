@@ -10,12 +10,6 @@ RSpec.describe CollectionDecorator do
     expect(decorator.manageable_files?).to be false
   end
 
-  describe '#collections' do
-    it "cannot have parent collections" do
-      expect(decorator.collections).to be_empty
-    end
-  end
-
   describe '#parents' do
     it "cannot have parent resources" do
       expect(decorator.parents).to be_empty
@@ -25,6 +19,13 @@ RSpec.describe CollectionDecorator do
   describe '#title' do
     it 'exposes the title' do
       expect(decorator.title).to eq 'Title'
+    end
+  end
+
+  describe "#members" do
+    it "returns members which have this collection set" do
+      child = FactoryBot.create_for_repository(:scanned_resource, member_of_collection_ids: collection.id)
+      expect(decorator.members.map(&:id)).to eq [child.id]
     end
   end
 end
