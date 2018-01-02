@@ -25,7 +25,7 @@ class Valkyrie::ResourceDecorator < ApplicationDecorator
     ]
   )
 
-  [:volumes, :members, :file_sets, :parents, :member_of_collections, :ephemera_folders].each do |relation|
+  [:volumes, :members, :file_sets, :parents, :member_of_collections, :ephemera_folders, :ephemera_projects].each do |relation|
     delegate :"#{relation}", :"decorated_#{relation}", to: :contextual_query_service
   end
 

@@ -16,16 +16,12 @@ class EphemeraBoxDecorator < Valkyrie::ResourceDecorator
     "Box #{box_number.first}"
   end
 
-  def ephemera_projects
-    decorated_parents
-  end
-
   def collection_slugs
-    @collection_slugs ||= ephemera_projects.map(&:slug)
+    @collection_slugs ||= decorated_ephemera_projects.map(&:slug)
   end
 
   def ephemera_project
-    @ephemera_project ||= ephemera_projects.first || NullProject.new
+    @ephemera_project ||= decorated_ephemera_projects.first || NullProject.new
   end
 
   class NullProject

@@ -84,4 +84,17 @@ RSpec.describe ContextualQueryService do
       expect(contextual_query_service.decorated_ephemera_folders.first).to be_a EphemeraFolderDecorator
     end
   end
+
+  describe ".ephemera_projects" do
+    let(:resource) { FactoryBot.create_for_repository(:ephemera_project, member_ids: child.id) }
+    let(:child) { FactoryBot.create_for_repository(:ephemera_box) }
+    it "returns all projects" do
+      resource
+      expect(child_query_service.ephemera_projects.map(&:id)).to eq [resource.id]
+    end
+    it "can decorate ephemera_projects" do
+      resource
+      expect(child_query_service.decorated_ephemera_projects.first).to be_a EphemeraProjectDecorator
+    end
+  end
 end
