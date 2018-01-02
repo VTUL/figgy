@@ -7,7 +7,7 @@ class ContextualQueryService
   end
 
   def members
-    binding.pry if resource.respond_to?(:member_ids) && resource.member_ids.nil?
+    return [] if resource.try(:member_ids).blank?
     @members ||= query_service.find_members(resource: resource).to_a
   end
 
