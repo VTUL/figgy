@@ -6,8 +6,9 @@ RSpec.describe ContextualQueryService do
   subject(:contextual_query_service) { described_class.new(resource: resource, query_service: query_service) }
   let(:child_query_service) { described_class.new(resource: child, query_service: query_service) }
   let(:query_service) { Valkyrie::MetadataAdapter.find(:indexing_persister).query_service }
-  let(:resource) { FactoryBot.create_for_repository(:scanned_resource, member_ids: child.id) }
+  let(:resource) { FactoryBot.create_for_repository(:scanned_resource, member_ids: child.id, member_of_collection_ids: collection.id) }
   let(:child) { FactoryBot.create_for_repository(:scanned_resource, files: [file]) }
+  let(:collection) { FactoryBot.create_for_repository(:collection) }
   let(:file) { fixture_file_upload('files/example.tif', 'image/tiff') }
 
   describe ".members" do
@@ -31,6 +32,17 @@ RSpec.describe ContextualQueryService do
     end
   end
 
+  describe ".parents" do
+    it "returns parents" do
+      expect(contextual_query_service.parents).to eq []
+      expect(child_query_service.parents.map(&:id)).to eq [resource.id]
+    end
+    it "can decorate parents" do
+      expect(contextual_query_service.decorated_parents).to eq []
+      expect(child_query_service.decorated_parents.first).to be_a ScannedResourceDecorator
+    end
+  end
+
   describe ".file_sets" do
     it "returns only children which are file_sets" do
       expect(contextual_query_service.file_sets).to eq []
@@ -38,6 +50,15 @@ RSpec.describe ContextualQueryService do
     end
     it "can decorate file sets" do
       expect(child_query_service.decorated_file_sets.first).to be_a FileSetDecorator
+    end
+  end
+
+  describe ".member_of_collections" do
+    it "returns all collections an object is a member of" do
+      expect(contextual_query_service.member_of_collections.map(&:id)).to eq [collection.id]
+    end
+    it "can decorate collections" do
+      expect(contextual_query_service.decorated_member_of_collections.first).to be_a CollectionDecorator
     end
   end
 end

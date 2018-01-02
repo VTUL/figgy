@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 class CollectionIndexer
-  delegate :query_service, to: :metadata_adapter
   attr_reader :resource
   def initialize(resource:)
     @resource = resource
@@ -24,18 +23,10 @@ class CollectionIndexer
 
   def ephemera_collection_titles
     return [] unless resource.is_a?(EphemeraFolder) && decorated_resource.ephemera_box
-    decorated_resource.ephemera_box.member_of_collections.map(&:title)
+    decorated_resource.ephemera_box.decorated_member_of_collections.map(&:title)
   end
 
   def collections
-    return [] unless resource.respond_to?(:member_of_collection_ids) && resource.member_of_collection_ids
-    @collections ||=
-      begin
-        query_service.find_references_by(resource: resource, property: :member_of_collection_ids).to_a.map(&:decorate)
-      end
-  end
-
-  def metadata_adapter
-    Valkyrie.config.metadata_adapter
+    @collections ||= resource.decorate.decorated_member_of_collections
   end
 end
