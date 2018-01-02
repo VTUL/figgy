@@ -25,6 +25,14 @@ class Valkyrie::ResourceDecorator < ApplicationDecorator
     ]
   )
 
+  [:volumes, :members, :file_sets].each do |relation|
+    delegate :"#{relation}", :"decorated_#{relation}", to: :contextual_query_service
+  end
+
+  def contextual_query_service
+    @contextual_query_service ||= ContextualQueryService.new(resource: object, query_service: query_service)
+  end
+
   def created_at
     output = super
     return if output.blank?
@@ -86,12 +94,6 @@ class Valkyrie::ResourceDecorator < ApplicationDecorator
                      .to_a
                      .map(&:decorate)
       end
-  end
-
-  # Accesses all Resources referenced by a given Resource using the :member_ids property
-  # @return [Array<Valkyrie::Resource>] an array of Resources (possibly empty)
-  def members
-    @members ||= find_members(resource: model)
   end
 
   # Accesses all Resources referencing a given Resource using the :member_ids property

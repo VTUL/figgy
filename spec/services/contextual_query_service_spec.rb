@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 include ActionDispatch::TestProcess
 
@@ -15,7 +16,7 @@ RSpec.describe ContextualQueryService do
       expect(contextual_query_service.members.first).to be_a ScannedResource
     end
     it "can decorate members" do
-      expect(contextual_query_service.members.decorate.first).to be_a ScannedResourceDecorator
+      expect(contextual_query_service.decorated_members.first).to be_a ScannedResourceDecorator
     end
   end
 
@@ -26,7 +27,7 @@ RSpec.describe ContextualQueryService do
       expect(child_query_service.volumes).to eq []
     end
     it "can decorate volumes" do
-      expect(contextual_query_service.volumes.decorate.first).to be_a ScannedResourceDecorator
+      expect(contextual_query_service.decorated_volumes.first).to be_a ScannedResourceDecorator
     end
   end
 
@@ -34,6 +35,9 @@ RSpec.describe ContextualQueryService do
     it "returns only children which are file_sets" do
       expect(contextual_query_service.file_sets).to eq []
       expect(child_query_service.file_sets.length).to eq 1
+    end
+    it "can decorate file sets" do
+      expect(child_query_service.decorated_file_sets.first).to be_a FileSetDecorator
     end
   end
 end

@@ -30,18 +30,6 @@ class ScannedResourceDecorator < Valkyrie::ResourceDecorator
 
   delegate(*Schema::Common.attributes, to: :primary_imported_metadata, prefix: :imported)
 
-  def members
-    @members ||= query_service.find_members(resource: model).to_a
-  end
-
-  def volumes
-    @volumes ||= members.select { |r| r.is_a?(ScannedResource) }.map(&:decorate).to_a
-  end
-
-  def file_sets
-    @file_sets ||= members.select { |r| r.is_a?(FileSet) }.map(&:decorate).to_a
-  end
-
   def rendered_rights_statement
     rights_statement.map do |rights_statement|
       term = ControlledVocabulary.for(:rights_statement).find(rights_statement)
@@ -102,7 +90,7 @@ class ScannedResourceDecorator < Valkyrie::ResourceDecorator
   end
 
   def human_readable_type
-    return model.human_readable_type if volumes.empty?
+    return model.human_readable_type if contextual_query_service.volumes.empty?
     I18n.translate("valhalla.models.multi_volume_work", default: 'Multi Volume Work')
   end
 

@@ -6,7 +6,7 @@ class RecharacterizeJob < ApplicationJob
 
     logger.info "Recharacterizing #{id}"
     recharacterize(r.file_sets)
-    r.volumes.each do |vol|
+    r.decorated_volumes.each do |vol|
       logger.info "Recharacterizing volume #{vol.id}"
       recharacterize(vol.file_sets)
     end
