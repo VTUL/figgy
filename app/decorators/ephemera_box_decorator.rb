@@ -20,26 +20,6 @@ class EphemeraBoxDecorator < Valkyrie::ResourceDecorator
     @collection_slugs ||= decorated_ephemera_projects.map(&:slug)
   end
 
-  def ephemera_project
-    @ephemera_project ||= decorated_ephemera_projects.first || NullProject.new
-  end
-
-  class NullProject
-    def title; end
-
-    def header
-      nil
-    end
-
-    def templates
-      []
-    end
-
-    def nil?
-      true
-    end
-  end
-
   def manageable_files?
     false
   end

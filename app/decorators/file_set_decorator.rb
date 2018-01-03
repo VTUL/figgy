@@ -16,16 +16,8 @@ class FileSetDecorator < Valkyrie::ResourceDecorator
     false
   end
 
-  def parents
-    query_service.find_parents(resource: model).to_a.map(&:decorate)
-  end
-
   def parent
-    parents.first
-  end
-
-  def collections
-    []
+    decorated_parents.first
   end
 
   def collection_slugs

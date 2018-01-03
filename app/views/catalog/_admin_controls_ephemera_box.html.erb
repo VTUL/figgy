@@ -9,7 +9,7 @@
               <li>
                 <%= link_to "No Template", polymorphic_path([:parent, :new, resource]) %>
               </li>
-              <% decorated_resource.ephemera_project.templates.each do |template| %>
+              <% decorated_resource.decorated_ephemera_project.templates.each do |template| %>
                 <li>
                 <%= link_to template.template_label, polymorphic_path([:parent, :new, resource], template_id: template.id) %>
                 </li>

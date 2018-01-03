@@ -1,7 +1,7 @@
 <% if decorated_resource.ephemera_box || decorated_resource.ephemera_project %>
   <ol class="breadcrumb">
     <% if decorated_resource.ephemera_project %>
-        <li><%= link_to decorated_resource.ephemera_project.first_title, solr_document_path(id: "#{decorated_resource.ephemera_project.id}") %></li>
+        <li><%= link_to decorated_resource.decorated_ephemera_project.first_title, solr_document_path(id: "#{decorated_resource.ephemera_project.id}") %></li>
     <% end %>
     <% if decorated_resource.ephemera_box %>
       <li><%= link_to decorated_resource.ephemera_box.first_title, solr_document_path(id: "#{decorated_resource.ephemera_box.id}") %></li>

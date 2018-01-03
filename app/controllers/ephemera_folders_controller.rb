@@ -95,6 +95,6 @@ class EphemeraFoldersController < BaseResourceController
 
   # returns decorated project
   def ephemera_project
-    parent_resource.is_a?(EphemeraProject) ? parent_resource.decorate : parent_resource.decorate.ephemera_project
+    parent_resource.is_a?(EphemeraProject) ? parent_resource.decorate : parent_resource.decorate.decorated_ephemera_project
   end
 end

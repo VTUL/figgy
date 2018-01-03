@@ -16,7 +16,7 @@ class ProjectIndexer
 
   def project
     return unless box
-    box.decorate.ephemera_project
+    box.decorate.decorated_ephemera_project
   end
 
   def box

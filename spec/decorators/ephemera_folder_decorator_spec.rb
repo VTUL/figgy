@@ -65,8 +65,8 @@ RSpec.describe EphemeraFolderDecorator do
     let(:collection) { FactoryBot.create_for_repository(:collection) }
     let(:resource) { FactoryBot.create_for_repository(:ephemera_folder, member_of_collection_ids: [collection.id]) }
     it 'retrieves all parent collections' do
-      expect(resource.decorate.collections.to_a).not_to be_empty
-      expect(resource.decorate.collections.to_a.first).to be_a Collection
+      expect(resource.decorate.member_of_collections.to_a).not_to be_empty
+      expect(resource.decorate.member_of_collections.to_a.first).to be_a Collection
     end
   end
 

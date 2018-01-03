@@ -13,7 +13,7 @@ class ContextualQueryService
     end
   end
 
-  decorates_methods :members, :volumes, :file_sets, :parents, :member_of_collections, :collection_members, :ephemera_folders, :ephemera_projects
+  decorates_methods :members, :volumes, :file_sets, :parents, :member_of_collections, :collection_members, :ephemera_folders, :ephemera_projects, :ephemera_project
 
   def initialize(resource:, query_service:)
     @resource = resource
@@ -45,8 +45,42 @@ class ContextualQueryService
     @parents ||= query_service.find_parents(resource: resource).to_a
   end
 
+  def parent
+    @parent ||= parents.first
+  end
+
+  def decorated_parent
+    @decorated_parent ||= parent.try(:decorate)
+  end
+
   def ephemera_projects
     @ephemera_projects ||= parents.select { |r| r.is_a?(EphemeraProject) }.to_a
+  end
+
+  def ephemera_project
+    @ephemera_project ||= ephemera_projects.first
+  end
+
+  class NullProject
+    def title; end
+
+    def first_title; end
+
+    def header
+      nil
+    end
+
+    def templates
+      []
+    end
+
+    def nil?
+      true
+    end
+  end
+
+  def decorated_ephemera_project
+    @decorated_ephemera_project ||= ephemera_project.try(:decorate) || NullProject.new
   end
 
   def member_of_collections

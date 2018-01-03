@@ -12,7 +12,7 @@ RSpec.describe FileSetDecorator do
 
   describe '#collections' do
     it "exposes parent collections" do
-      expect(decorator.collections).to eq []
+      expect(decorator.member_of_collections).to eq []
     end
   end
 

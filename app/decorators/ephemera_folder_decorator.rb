@@ -42,14 +42,6 @@ class EphemeraFolderDecorator < Valkyrie::ResourceDecorator
     ]
   )
 
-  def members
-    @members ||= query_service.find_members(resource: model).to_a
-  end
-
-  def collections
-    @collections ||= query_service.find_references_by(resource: self, property: :member_of_collection_ids).to_a.map(&:decorate)
-  end
-
   def rendered_date_range
     return unless first_range.present?
     first_range.range_string
@@ -75,19 +67,15 @@ class EphemeraFolderDecorator < Valkyrie::ResourceDecorator
   end
 
   def ephemera_box
-    @ephemera_box ||= parent if parent.is_a?(EphemeraBox)
+    @ephemera_box ||= decorated_parent if decorated_parent.is_a?(EphemeraBox)
   end
 
   def ephemera_project
-    @ephemera_project ||= parent.is_a?(EphemeraBox) ? parent.ephemera_project : parent
+    @ephemera_project ||= decorated_parent.is_a?(EphemeraBox) ? decorated_parent.decorated_ephemera_project : decorated_parent
   end
 
   def collection_slugs
     @collection_slugs ||= Array.wrap(ephemera_project.try(:slug))
-  end
-
-  def parent
-    @parent ||= query_service.find_parents(resource: model).to_a.first.try(:decorate)
   end
 
   def manageable_files?

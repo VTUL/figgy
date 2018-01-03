@@ -38,8 +38,8 @@ RSpec.describe EphemeraFieldDecorator do
     end
 
     it 'retrieves the title of parents' do
-      expect(resource.decorate.projects.to_a).not_to be_empty
-      expect(resource.decorate.projects.to_a.first).to be_a EphemeraProject
+      expect(resource.decorate.ephemera_projects.to_a).not_to be_empty
+      expect(resource.decorate.ephemera_projects.to_a.first).to be_a EphemeraProject
     end
   end
   context 'when a child of another vocabulary' do
