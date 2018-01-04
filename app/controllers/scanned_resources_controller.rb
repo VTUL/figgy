@@ -107,7 +107,7 @@ class ScannedResourcesController < BaseResourceController
     private
 
       def folder_location
-        @folder_location ||= Dir.glob(root_path.join("**/#{id}")).first
+        @folder_location ||= `find #{root_path} -type d -name "#{id}"`.split.select(&:present?).first
       end
   end
 end
