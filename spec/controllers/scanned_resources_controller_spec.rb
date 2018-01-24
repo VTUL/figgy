@@ -547,4 +547,15 @@ RSpec.describe ScannedResourcesController do
       end
     end
   end
+
+  describe "redirects for old resources" do
+    let(:user) { FactoryBot.create(:admin) }
+    context "when requesting a migrated resource" do
+      it "works" do
+        resource = FactoryBot.create_for_repository(:scanned_resource, local_identifier: "pk643fd004")
+        get :show, params: { id: "pk643fd004" }
+        expect(response).to redirect_to solr_document_path(id: resource.id.to_s)
+      end
+    end
+  end
 end

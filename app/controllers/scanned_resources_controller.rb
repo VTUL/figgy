@@ -7,6 +7,19 @@ class ScannedResourcesController < BaseResourceController
     storage_adapter: Valkyrie.config.storage_adapter
   )
 
+  def show
+    @resource = begin
+                  find_resource(params[:id])
+                rescue Valkyrie::Persistence::ObjectNotFoundError
+                  find_resource_by_local_identifier(params[:id])
+                end
+    redirect_to solr_document_path(id: @resource.id.to_s)
+  end
+
+  def find_resource_by_local_identifier(id)
+    query_service.custom_queries.find_by_local_identifier(local_identifier: id).first
+  end
+
   def after_create_success(obj, change_set)
     super
     handle_save_and_ingest(obj)

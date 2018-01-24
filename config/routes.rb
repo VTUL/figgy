@@ -78,6 +78,7 @@ Rails.application.routes.draw do
         get "save_and_ingest/:id", action: :save_and_ingest
       end
     end
+    resources :multi_volume_works, only: :show, controller: :scanned_resources
     get '/scanned_resources/:parent_id/new', to: 'scanned_resources#new', as: :parent_new_scanned_resource
 
     resources :ephemera_projects do
